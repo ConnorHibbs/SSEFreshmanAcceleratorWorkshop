@@ -7,16 +7,13 @@ import java.awt.*;
 
 public class Window extends JFrame {
 
-    JPanel content;
+    private JPanel content;
 
     public Window() {
         super("Black Jack");
 
         content = new JPanel();
         content.setLayout(new BorderLayout());
-
-        BettingPanel bettingPanel = new BettingPanel();
-        content.add(bettingPanel, BorderLayout.SOUTH);
 
         add(content);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -27,5 +24,9 @@ public class Window extends JFrame {
     public void setTable(view.Table table) {
         content.add(table, BorderLayout.CENTER);
         revalidate();
+    }
+
+    public void setBettingPanel(BettingPanel bettingPanel) {
+        content.add(bettingPanel, BorderLayout.SOUTH);
     }
 }

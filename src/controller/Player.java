@@ -32,4 +32,22 @@ public class Player {
     private void onBust() {
 
     }
+
+    public model.Player getModel() {
+        return model;
+    }
+
+    public view.Player getView() {
+        return view;
+    }
+
+    public boolean canBet(int amount) {
+        return amount <= model.getChips();
+    }
+
+    public void bet(int amount) {
+        if(canBet(amount)) {
+            model.applyBet(amount);
+        }
+    }
 }

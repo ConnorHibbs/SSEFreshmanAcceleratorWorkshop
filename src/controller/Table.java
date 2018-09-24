@@ -9,6 +9,8 @@ public class Table {
 
     private boolean roundInProgress = false;
 
+    private Player currentPlayer;
+
     public Table(view.Table tableView, model.Table tableModel) {
         this.view = tableView;
         this.model = tableModel;
@@ -38,9 +40,9 @@ public class Table {
         }
     }
 
-    public void addPlayer(model.Player p) {
-        model.addPlayer(p);
-        view.addPlayer(p);
+    public void addPlayer(controller.Player p) {
+        model.addPlayer(p.getModel());
+        view.addPlayer(p.getModel());
     }
 
     public void endRound() {
@@ -51,6 +53,14 @@ public class Table {
 
     public Card draw() {
         return model.getDeck().draw();
+    }
+
+    public void setCurrentPlayer(Player player) {
+        this.currentPlayer = player;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public void nextPlayer() {
