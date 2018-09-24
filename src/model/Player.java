@@ -1,0 +1,44 @@
+package model;
+
+public class Player {
+
+    private String name;
+    private double chips;
+    private Hand hand;
+
+    public Player(String name, double chips) {
+        this.name = name;
+        this.chips = chips;
+        this.hand = new Hand();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getChips() {
+        return chips;
+    }
+
+    public void setChips(double chips) {
+        this.chips = chips;
+    }
+
+    public void deal(Card card) {
+        this.hand.add(card);
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public void setHand(Hand hand) {
+        this.hand = hand;
+    }
+
+    public static final Player EMPTY_MODEL = new model.Player("", 0);
+}
