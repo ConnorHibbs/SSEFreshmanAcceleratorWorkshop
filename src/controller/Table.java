@@ -99,6 +99,7 @@ public class Table {
         // determine the winners
         for(controller.Player pController : players) {
             model.Player p = pController.getModel();
+            p.getHand().get(0).setVisibility(Card.Visibility.VISIBLE);
             int playerTotal = p.getHand().getTotal();
 
             if (playerTotal > 21) {
@@ -119,6 +120,8 @@ public class Table {
                 p.setChips(p.getChips() + p.getBet());
                 System.out.println(p.getName() + " has pushed");
             }
+
+            pController.getView().revalidate();
         }
     }
 

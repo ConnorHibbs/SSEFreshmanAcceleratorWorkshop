@@ -18,10 +18,19 @@ public class Player {
         Card cardDealt = table.draw();
         deal(cardDealt);
 
-        int total = model.getHand().getTotal();
+        if(model.getHand().getTotal() > 21) {
+            // see if we can reduce any aces
+            for(Card c : getModel().getHand()) {
+                if(c.getNumber() == Card.Number._A && c.getValue() == 11) {
+                    c.setValue(1);
+                    break;
+                }
+            }
 
-        if(total > 21) {
-            stay();
+            // if still over 21, stay
+            if(model.getHand().getTotal() > 21) {
+                stay();
+            }
         }
 
         view.revalidate();

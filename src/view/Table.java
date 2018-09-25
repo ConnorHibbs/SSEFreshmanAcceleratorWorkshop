@@ -23,9 +23,6 @@ public class Table extends JPanel {
         setLayout(new BorderLayout());
         setBackground(Color.GREEN.darker().darker());
 
-        // TODO get the dealer and add it to the game
-
-        // TODO add graphic center
         startGame = new JButton("Start New Round");
         startGame.addActionListener(e -> System.out.println("Start Game Pressed from " + this));
         add(startGame, BorderLayout.CENTER);
