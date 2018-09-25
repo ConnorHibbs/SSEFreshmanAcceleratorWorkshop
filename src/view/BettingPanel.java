@@ -1,16 +1,21 @@
 package view;
 
+import java.util.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class BettingPanel extends JPanel {
 
     private JLabel currentPlayerLabel = new JLabel("?");
     private JLabel currentBetLabel = new JLabel("$0");
     private int currentBet = 0;
-    private JButton pennyButton, nickelButton, dimeButton, quarterButton, fiftyButton, dollarButton, fiveButton, tenButton;
 
     private controller.Table table;
+
+    private List<JLabel> bettingButtons;
 
     public BettingPanel(controller.Table table) {
         super();
@@ -18,15 +23,15 @@ public class BettingPanel extends JPanel {
 
         setLayout(new BorderLayout());
 
+        final int[] VALUES = {1, 5, 10, 25, 50, 100, 500, 1000, 5000, 10000, 50000};
+
         JPanel bettingButtonsPanel = new JPanel();
-        pennyButton   = createButton(bettingButtonsPanel, 1);
-        nickelButton  = createButton(bettingButtonsPanel, 5);
-        dimeButton    = createButton(bettingButtonsPanel, 10);
-        quarterButton = createButton(bettingButtonsPanel, 25);
-        fiftyButton   = createButton(bettingButtonsPanel, 50);
-        dollarButton  = createButton(bettingButtonsPanel, 100);
-        fiveButton    = createButton(bettingButtonsPanel, 500);
-        tenButton     = createButton(bettingButtonsPanel, 1000);
+        bettingButtons = new ArrayList<>();
+        for(Integer value : VALUES) {
+            JLabel button = createButton(value);
+            bettingButtons.add(button);
+            bettingButtonsPanel.add(button);
+        }
 
         JPanel bettingControlPanel = new JPanel();
         bettingControlPanel.add(currentBetLabel);
@@ -44,10 +49,16 @@ public class BettingPanel extends JPanel {
         add(bettingControlPanel, BorderLayout.EAST);
     }
 
-    private JButton createButton(JPanel parent, int amount) {
-        JButton button = new JButton("$" + amount);
-        button.addActionListener(e -> addToBet(amount));
-        parent.add(button);
+    private JLabel createButton(int amount) {
+        ImageIcon icon = new ImageIcon("res/chips/" + amount + ".png");
+        icon = new ImageIcon(icon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+        JLabel button = new JLabel(icon);
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                addToBet(amount);
+            }
+        });
         return button;
     }
 
