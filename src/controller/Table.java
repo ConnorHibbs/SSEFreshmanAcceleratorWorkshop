@@ -30,23 +30,25 @@ public class Table {
     public void startRound() {
         System.out.println("Starting Round");
 
-        for(int i = 0; i < 2; i++) {
-            for (controller.Player player : players) {
-                Card c = model.getDeck().draw();
-                player.deal(c);
-            }
-            Card c = model.getDeck().draw();
-            c.setVisibility(Card.Visibility.HIDDEN);
-            dealer.deal(c);
+        // deal out the cards
+        Card c;
+        for (controller.Player player : players) {
+            c = model.getDeck().draw();
+            c.setVisibility(Card.Visibility.SPOILER);
+            player.deal(c);
         }
+        c = model.getDeck().draw();
+        c.setVisibility(Card.Visibility.HIDDEN);
+        dealer.deal(c);
 
-        for(model.Player player : model.getPlayers()) {
-            System.out.println(player.getName() + " has:");
-            for(Card c : player.getHand()) {
-                System.out.println("\t" + c);
-            }
-            System.out.println();
+        for (controller.Player player : players) {
+            c = model.getDeck().draw();
+            c.setVisibility(Card.Visibility.VISIBLE);
+            player.deal(c);
         }
+        c = model.getDeck().draw();
+        c.setVisibility(Card.Visibility.VISIBLE);
+        dealer.deal(c);
 
         // TODO disable the betting panel
         // TODO disable the start round button
