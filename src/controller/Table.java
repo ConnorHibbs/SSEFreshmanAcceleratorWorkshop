@@ -7,9 +7,8 @@ public class Table {
     private view.Table view;
     private model.Table model;
 
-    private Player[] players = {null, null, null};
+    private controller.Player[] players = {null, null, null};
 
-//    private controller.Player currentPlayer;
     private int currentPlayer = 0;
 
     public Table(view.Table tableView, model.Table tableModel) {
@@ -24,7 +23,7 @@ public class Table {
         System.out.println("Starting Round");
 
         for(int i = 0; i < 2; i++) {
-            for (model.Player player : model.getPlayers()) {
+            for (controller.Player player : players) {
                 Card c = model.getDeck().draw();
                 player.deal(c);
             }
@@ -55,7 +54,7 @@ public class Table {
         }
 
         model.addPlayer(p.getModel());
-        view.addPlayer(p.getModel());
+        view.addPlayer(p.getView());
     }
 
     public void endRound() {

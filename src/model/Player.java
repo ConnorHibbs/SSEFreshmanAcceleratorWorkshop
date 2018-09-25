@@ -30,10 +30,6 @@ public class Player {
         this.chips = chips;
     }
 
-    public void deal(Card card) {
-        this.hand.add(card);
-    }
-
     public Hand getHand() {
         return hand;
     }
@@ -47,5 +43,5 @@ public class Player {
         this.bet = amount;
     }
 
-    public static final Player EMPTY_MODEL = new model.Player("", 0);
+    public static final Player EMPTY_MODEL = new model.Player("(empty)", 0);
 }

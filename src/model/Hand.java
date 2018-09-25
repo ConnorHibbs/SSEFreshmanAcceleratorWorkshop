@@ -8,6 +8,10 @@ public class Hand extends ArrayList<Card> {
 
     }
 
+    public Card getLast() {
+        return get(size() - 1);
+    }
+
     public int getTotal() {
         return this.stream().mapToInt(Card::getValue).sum();
     }

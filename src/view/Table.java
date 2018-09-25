@@ -32,17 +32,20 @@ public class Table extends JPanel {
         add(startGame, BorderLayout.CENTER);
     }
 
-    public void addPlayer(model.Player player) {
+    public void addPlayer(view.Player player) {
         // check for available spots at the table
 
         if(players[1] == Player.EMPTY_SEAT) {
-            players[1] = new Player(player);
+            remove(players[1]);
+            players[1] = player;
             add(players[1], BorderLayout.SOUTH);
         } else if(players[0] == Player.EMPTY_SEAT) {
-            players[0] = new Player(player);
+            remove(players[0]);
+            players[0] = player;
             add(players[0], BorderLayout.WEST);
         } else if(players[2] == Player.EMPTY_SEAT) {
-            players[2] = new Player(player);
+            remove(players[2]);
+            players[2] = player;
             add(players[2], BorderLayout.EAST);
         } else {
             throw new RuntimeException("Cannot add " + player.getName() + ", the table is full");

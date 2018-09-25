@@ -13,13 +13,14 @@ public class Player {
         this.model = model;
         this.view = view;
 
-        view.setOnHit(e -> hit());
-        view.setOnStay(e -> stay());
+//        view.setOnHit(e -> hit());
+//        view.setOnStay(e -> stay());
     }
 
     public void hit() {
         Card cardDealt = table.draw();
-        model.deal(cardDealt);
+        deal(cardDealt);
+        view.revalidate();
 
         // TODO evaluate if there is a bust
     }
@@ -31,6 +32,11 @@ public class Player {
 
     private void onBust() {
 
+    }
+
+    public void deal(Card c) {
+        model.getHand().add(c);
+        view.revalidate();
     }
 
     public model.Player getModel() {
