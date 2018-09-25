@@ -8,12 +8,20 @@ public class Table {
     private model.Table model;
 
     private controller.Player[] players = {null, null, null};
+    private controller.Player dealer;
 
     private int currentPlayer = 0;
 
     public Table(view.Table tableView, model.Table tableModel) {
         this.view = tableView;
         this.model = tableModel;
+
+        // create the dealer
+        model.Player dealerModel = new model.Player("Dealer", -1);
+        view.Player dealerView = new view.Player(dealerModel);
+        dealer = new controller.Player(this, dealerModel, dealerView);
+
+        view.setDealer(dealer);
 
         view.setOnStartRoundPressed(e -> startRound());
         view.setOnRoundOver(e -> endRound());
@@ -27,6 +35,9 @@ public class Table {
                 Card c = model.getDeck().draw();
                 player.deal(c);
             }
+            Card c = model.getDeck().draw();
+            c.setVisibility(Card.Visibility.HIDDEN);
+            dealer.deal(c);
         }
 
         for(model.Player player : model.getPlayers()) {
@@ -79,13 +90,21 @@ public class Table {
         return currentPlayer <= 2;
     }
 
+    public void startDealer() {
+        // TODO make the dealer draw cards
+        System.out.println("Dealer's turn");
+
+        model.Player dealer = model.getDealer();
+    }
+
     public boolean nextPlayer() {
         currentPlayer = currentPlayer + 1;
 
         if(currentPlayer >= 3) {
-            // TODO go to the dealer
+            // reset the player, and tell them there were no more players
+            currentPlayer = 0;
             return false;
-        } else  if(getCurrentPlayer() == null) {
+        } else if (getCurrentPlayer() == null) {
             // move on to the next player slot
             return nextPlayer();
         } else {

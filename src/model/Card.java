@@ -2,6 +2,10 @@ package model;
 
 public class Card {
 
+    public enum Visibility {
+        HIDDEN, SPOILER, VISIBLE
+    }
+
     public enum Suit {
         NULL, SPADES, HEARTS, CLUBS, DIAMONDS;
 
@@ -20,6 +24,7 @@ public class Card {
         }
     }
 
+    private Visibility visibility;
     private Number number;
     private Suit suit;
     private int value;
@@ -32,6 +37,7 @@ public class Card {
         this.number = number;
         this.suit = suit;
         this.value = convertCardToValue(number);
+        visibility = Visibility.VISIBLE;
     }
 
     public static int convertCardToValue(Number card) {
@@ -70,5 +76,13 @@ public class Card {
 
     public String toString() {
         return value + " of " + suit;
+    }
+
+    public Visibility getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Visibility visibility) {
+        this.visibility = visibility;
     }
 }

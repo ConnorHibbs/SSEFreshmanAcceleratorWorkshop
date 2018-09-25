@@ -30,6 +30,10 @@ public class Table {
         return players;
     }
 
+    public Player getDealer() {
+        return dealer;
+    }
+
     public Deck getDeck() {
         return deck;
     }

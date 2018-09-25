@@ -2,6 +2,7 @@ package controller;
 
 import model.Player;
 import view.BettingPanel;
+import view.HitStayPanel;
 import view.Window;
 
 public class Game {
@@ -41,9 +42,11 @@ public class Game {
 
         // create the betting panel
         BettingPanel bettingPanel = new BettingPanel(controller);
+        HitStayPanel hitStayPanel = new HitStayPanel(controller);
 
         // send components to the window
         window.setTable(view);
         window.setBettingPanel(bettingPanel);
+        window.setHitStayPanel(hitStayPanel);
     }
 }

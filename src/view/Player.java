@@ -2,7 +2,6 @@ package view;
 
 import javax.swing.*;
 
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,23 +11,34 @@ public class Player extends JPanel {
 
     private model.Player model;
 
-    private List<Card> cardImages;
+//    private List<model.Card> currentCards;
+
+    private int numCards = 0;
 
     public Player(model.Player model) {
         this.model = model;
 
-        cardImages = new ArrayList<>();
+//        currentCards = new ArrayList<>();
 
         add(new JLabel(model.getName()));
     }
 
     @Override
     public void revalidate() {
-        if(cardImages != null && model != null) {
-            if (cardImages.size() != model.getHand().size()) {
-                model.Card cardModel = model.getHand().getLast();
-                view.Card newCard = new Card(cardModel);
-                cardImages.add(newCard);
+//        if(currentCards != null && model != null) {
+            // draw to until we have all new cards
+//            while(currentCards.size() != model.getHand().size()) {
+//                System.out.println("Adding a new card to the screen");
+//                model.Card cardModel = model.getHand().get(currentCards.size());
+//                currentCards.add(cardModel);
+//                view.Card newCard = new Card(cardModel);
+//                add(newCard);
+//            }
+
+        if(model != null) {
+            if(numCards != model.getHand().size()) {
+                numCards++;
+                view.Card newCard = new view.Card(model.getHand().getLast());
                 add(newCard);
             }
         }

@@ -12,26 +12,28 @@ public class Player {
         this.table = table;
         this.model = model;
         this.view = view;
-
-//        view.setOnHit(e -> hit());
-//        view.setOnStay(e -> stay());
     }
 
     public void hit() {
         Card cardDealt = table.draw();
         deal(cardDealt);
-        view.revalidate();
 
-        // TODO evaluate if there is a bust
+        int total = model.getHand().getTotal();
+
+        if(total > 21) {
+            stay();
+        }
+
+        view.revalidate();
     }
 
     public void stay() {
-        // TODO pass control back to the main game
-        table.nextPlayer();
-    }
+        boolean morePlayers = table.nextPlayer();
 
-    private void onBust() {
-
+        if(!morePlayers) {
+            // trigger the dealer to go
+            table.startDealer();
+        }
     }
 
     public void deal(Card c) {

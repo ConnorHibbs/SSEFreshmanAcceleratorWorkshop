@@ -10,7 +10,7 @@ public class Table extends JPanel {
 
     private Player[] players;
 
-    private Player dealer;
+    private controller.Player dealer;
 
     private model.Table model;
 
@@ -20,11 +20,10 @@ public class Table extends JPanel {
         super();
         this.model = model;
         players = new Player[] {Player.EMPTY_SEAT, Player.EMPTY_SEAT, Player.EMPTY_SEAT};
-        dealer = new Player(new model.Player("Dealer", -1));
         setLayout(new BorderLayout());
         setBackground(Color.GREEN.darker().darker());
 
-        add(dealer, BorderLayout.NORTH);
+        // TODO get the dealer and add it to the game
 
         // TODO add graphic center
         startGame = new JButton("Start New Round");
@@ -52,6 +51,11 @@ public class Table extends JPanel {
         }
 
         revalidate();
+    }
+
+    public void setDealer(controller.Player dealer) {
+        this.dealer = dealer;
+        add(dealer.getView(), BorderLayout.NORTH);
     }
 
     public int getPlayerCount() {
