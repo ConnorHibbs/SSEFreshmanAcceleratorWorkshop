@@ -32,4 +32,5 @@ public class Player extends JPanel {
     }
 
     public static final view.Player EMPTY_SEAT = new Player(EMPTY_MODEL);
+
 }

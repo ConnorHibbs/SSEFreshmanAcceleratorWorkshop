@@ -19,14 +19,14 @@ public class BettingPanel extends JPanel {
         setLayout(new BorderLayout());
 
         JPanel bettingButtonsPanel = new JPanel();
-        pennyButton = createButton(bettingButtonsPanel, 1);
-        nickelButton = createButton(bettingButtonsPanel, 5);
-        dimeButton = createButton(bettingButtonsPanel, 10);
+        pennyButton   = createButton(bettingButtonsPanel, 1);
+        nickelButton  = createButton(bettingButtonsPanel, 5);
+        dimeButton    = createButton(bettingButtonsPanel, 10);
         quarterButton = createButton(bettingButtonsPanel, 25);
-        fiftyButton = createButton(bettingButtonsPanel, 50);
-        dollarButton = createButton(bettingButtonsPanel, 100);
-        fiveButton = createButton(bettingButtonsPanel, 500);
-        tenButton = createButton(bettingButtonsPanel, 1000);
+        fiftyButton   = createButton(bettingButtonsPanel, 50);
+        dollarButton  = createButton(bettingButtonsPanel, 100);
+        fiveButton    = createButton(bettingButtonsPanel, 500);
+        tenButton     = createButton(bettingButtonsPanel, 1000);
 
         JPanel bettingControlPanel = new JPanel();
         bettingControlPanel.add(currentBetLabel);
@@ -63,8 +63,6 @@ public class BettingPanel extends JPanel {
 
         // TODO in the future, disable buttons that can't be used
 
-
-
         revalidate();
     }
 
@@ -74,6 +72,21 @@ public class BettingPanel extends JPanel {
             table.getCurrentPlayer().bet(currentBet);
             System.out.println(table.getCurrentPlayer().getModel().getName() + " has bet " + currentBet);
         }
+
+        // after they bet, go to the next player or begin the game
+        if(table.nextPlayer()) {
+            loadValuesForPlayer(table.getCurrentPlayer().getModel());
+        } else {
+            table.startRound();
+        }
+    }
+
+    private void loadValuesForPlayer(model.Player player) {
+        // TODO see if the player has a previous bet
+        // if they do, attempt to start at that number.
+        // else, reset to 0
+
+        revalidate();
     }
 
     @Override

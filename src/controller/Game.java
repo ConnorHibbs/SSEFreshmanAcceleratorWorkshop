@@ -17,7 +17,6 @@ public class Game {
         model.Table model = new model.Table();
         view.Table view = new view.Table(model);
 
-
         // create the controller
         controller.Table controller = new controller.Table(view, model);
 
@@ -39,7 +38,6 @@ public class Game {
         controller.addPlayer(pc1);
         controller.addPlayer(pc2);
         controller.addPlayer(pc3);
-        controller.setCurrentPlayer(pc1);
 
         // create the betting panel
         BettingPanel bettingPanel = new BettingPanel(controller);
