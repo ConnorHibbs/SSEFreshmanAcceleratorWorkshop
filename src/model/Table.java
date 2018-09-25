@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Table {
@@ -14,8 +15,7 @@ public class Table {
         players = new ArrayList<>();
         dealer = new Player("Dealer", Double.MAX_VALUE);
 
-        deck = new Deck();
-        deck.shuffle();
+        resetDeck();
     }
 
     public int getPlayerCount() {
@@ -36,6 +36,11 @@ public class Table {
 
     public Deck getDeck() {
         return deck;
+    }
+
+    public void resetDeck() {
+        deck = new Deck();
+        Collections.shuffle(deck);
     }
 
 }

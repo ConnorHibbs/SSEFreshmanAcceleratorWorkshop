@@ -11,34 +11,25 @@ public class Player extends JPanel {
 
     private model.Player model;
 
-//    private List<model.Card> currentCards;
+    private JPanel cardSpace;
 
     private int numCards = 0;
 
     public Player(model.Player model) {
         this.model = model;
-
-//        currentCards = new ArrayList<>();
+        cardSpace = new JPanel();
 
         add(new JLabel(model.getName()));
+        add(cardSpace);
     }
 
     @Override
     public void revalidate() {
-//        if(currentCards != null && model != null) {
-            // draw to until we have all new cards
-//            while(currentCards.size() != model.getHand().size()) {
-//                System.out.println("Adding a new card to the screen");
-//                model.Card cardModel = model.getHand().get(currentCards.size());
-//                currentCards.add(cardModel);
-//                view.Card newCard = new Card(cardModel);
-//                add(newCard);
-//            }
-
-        if(model != null) {
-            if(numCards != model.getHand().size()) {
-                numCards++;
-                view.Card newCard = new view.Card(model.getHand().getLast());
+        // if it is wrong, literally redraw everything
+        if(model != null && numCards != model.getHand().size()) {
+            this.removeAll();
+            for(model.Card c : model.getHand()) {
+                view.Card newCard = new view.Card(c);
                 add(newCard);
             }
         }

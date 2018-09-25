@@ -43,5 +43,18 @@ public class Player {
         this.bet = amount;
     }
 
+    public double getBet() {
+        return bet;
+    }
+
+    public void setBet(double bet) {
+        this.bet = bet;
+    }
+
+    public void reset() {
+        this.hand.clear();
+        this.bet = 0;
+    }
+
     public static final Player EMPTY_MODEL = new model.Player("(empty)", 0);
 }

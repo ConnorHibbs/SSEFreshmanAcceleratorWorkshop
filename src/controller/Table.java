@@ -27,8 +27,26 @@ public class Table {
         view.setOnRoundOver(e -> endRound());
     }
 
+    public void resetTable() {
+        model.resetDeck();
+
+        // reset the players
+        for(controller.Player pController : players) {
+            // no matter what, set their bet to 0
+            pController.getModel().reset();
+
+            // clear their cards, and update their money label
+            pController.getView().revalidate();
+        }
+
+        // reset the dealer
+        dealer.getModel().reset();
+        dealer.getView().revalidate();
+    }
+
     public void startRound() {
         System.out.println("Starting Round");
+        resetTable();
 
         // deal out the cards
         Card c;
@@ -70,33 +88,58 @@ public class Table {
         view.addPlayer(p.getView());
     }
 
+    /**
+     * Called when all cards have been dealt. This method is responsible
+     * for paying out the players, or collecting their chips
+     */
     public void endRound() {
+        int dealerTotal = dealer.getModel().getHand().getTotal();
+        System.out.println(dealer.getModel().getName() + " has a total of " + dealerTotal);
 
-        // TODO allocate out all of the chips for winners and losers
+        // determine the winners
+        for(controller.Player pController : players) {
+            model.Player p = pController.getModel();
+            int playerTotal = p.getHand().getTotal();
+
+            if (playerTotal > 21) {
+                // bust, do nothing, their bet will be cleared later
+                System.out.println(p.getName() + " has busted");
+            } else if (dealerTotal > 21) {
+                // dealer busted, win
+                System.out.println("The dealer busted, " + p.getName() + " wins!");
+            } else if (playerTotal < dealerTotal) {
+                // lost
+                System.out.println(p.getName() + " has lost");
+            } else if (playerTotal > dealerTotal) {
+                // win
+                p.setChips(p.getChips() + (p.getBet() * 2));
+                System.out.println(p.getName() + " has won");
+            } else if (playerTotal == dealerTotal) {
+                // push
+                p.setChips(p.getChips() + p.getBet());
+                System.out.println(p.getName() + " has pushed");
+            }
+        }
     }
 
     public Card draw() {
         return model.getDeck().draw();
     }
 
-    public void setCurrentPlayer(int playerNum) {
-        // TODO check if player num is valid
-        this.currentPlayer = playerNum;
-    }
-
     public controller.Player getCurrentPlayer() {
         return players[currentPlayer];
     }
 
-    public boolean hasNextPlayer() {
-        return currentPlayer <= 2;
-    }
-
     public void startDealer() {
-        // TODO make the dealer draw cards
-        System.out.println("Dealer's turn");
+        // change all of the dealer's cards to visible
+        dealer.getModel().getHand().get(0).setVisibility(Card.Visibility.VISIBLE);
 
-        model.Player dealer = model.getDealer();
+        while(dealer.getModel().getHand().getTotal() < 17) {
+            dealer.hit();
+        }
+
+        dealer.getView().revalidate();
+        endRound();
     }
 
     public boolean nextPlayer() {

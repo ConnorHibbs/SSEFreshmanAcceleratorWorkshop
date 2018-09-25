@@ -17,7 +17,7 @@ public class Card extends JLabel {
     private model.Card model;
 
     public ImageIcon CARD_FRONT;
-    public static final ImageIcon CARD_BACK = new ImageIcon(new ImageIcon("res/cards/red_joker.png").getImage().getScaledInstance(WIDTH, HEIGHT, Image.SCALE_DEFAULT));
+    public static final ImageIcon CARD_BACK = new ImageIcon(new ImageIcon("res/cards/back.png").getImage().getScaledInstance(WIDTH, HEIGHT, Image.SCALE_DEFAULT));
 
     public Card(model.Card model) {
         super();
