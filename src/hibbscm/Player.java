@@ -1,5 +1,7 @@
 package hibbscm;
 
+import model.Card;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class Player {
         int aceCount = 0;
 
         for(Card c : cardList) {
-            if (c.getNumber() == 11)
+            if (c.getValue() == 11)
                 aceCount++;
             else
                 pointTotal += c.getValue();

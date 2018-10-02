@@ -1,5 +1,7 @@
 package hibbscm;
 
+import model.Card;
+
 import java.util.Collections;
 import java.util.Stack;
 
