@@ -1,93 +1,86 @@
 package hibbscm;
 
-import java.util.Random;
-import java.util.Scanner;
-
-import static hibbscm.Card.convertCardToValue;
+import java.util.*;
 
 public class Main {
 
     public static void main(String args[]) {
         System.out.println("Welcome to Blackjack!");
-
-        String playerName;
-
-        System.out.println("Please enter your name");
         Scanner scanner = new Scanner(System.in);
-        playerName = scanner.next();
 
-        int playerTotal = 0;
-        int dealerTotal = 0;
+        Stack<Card> deck = new Stack();
+        for(int i = 0; i < 4; i++){
+            for(int k = 1; k < 14; k++)
+                deck.push(new Card(k, i));
+        }
+        Collections.shuffle(deck);
 
-        int newValue = getCard();
-        System.out.println(playerName + ", you got a " + newValue);
-        playerTotal += convertCardToValue(newValue);
+        Card cardA = deck.pop();
+        Card cardB = deck.pop();
+        Player dealer = new Player(cardA, cardB, "Dealer");
+        System.out.println(dealer.getName() + ": You got " + cardA + " and " + cardB + ".");
+        System.out.println(dealer.getName() + ": You have a total of " + dealer.getTotalPoints() + " points.");
 
-//        String response;
-//        do {
-//            newValue = getCard();
-//            System.out.println(playerName + ", you got a " + newValue);
-//            playerTotal += convertCardToValue(newValue);
-//            System.out.println(playerName + ", your total is " + playerTotal);
-//
-//            System.out.println("Would you like to hit or stay? (h/s)");
-//            response = scanner.next();
-//        } while(!response.equals("s") && playerTotal <= 21);
+        System.out.println("How many people are playing?");
+        int numberOfPlayers = Integer.parseInt(scanner.nextLine());
+        Player[] players = new Player[numberOfPlayers];
 
-
-        newValue = getCard();
-        System.out.println(playerName + ", you got a " + newValue);
-        playerTotal += convertCardToValue(newValue);
-
-        System.out.println(playerName + ", your total is " + playerTotal);
-
-        System.out.println("Would you like to hit or stay? (h/s)");
-        String response = scanner.next();
-
-        while (!response.equals("s") && playerTotal <= 21){
-            newValue = getCard();
-            System.out.println(playerName + ", you got a " + newValue);
-            playerTotal += convertCardToValue(newValue);
-            System.out.println(playerName + ", your total is " + playerTotal);
-
-            System.out.println("Would you like to hit or stay? (h/s)");
-            response = scanner.next();
+        int i = numberOfPlayers;
+        while (i >= 1){
+            System.out.println("Player " + (i) +  ": Please enter your name.");
+            String name = scanner.nextLine();
+            cardA = deck.pop();
+            cardB = deck.pop();
+            players[i-1] = new Player(cardA, cardB, name);
+            System.out.print(players[i-1].getName() + ": You got " + cardA + " and " + cardB + ".");
+            System.out.println(players[i-1].getName() + ": You have a total of " + players[i-1].getTotalPoints() + " points.");
+            i--;
         }
 
-//        dealerTotal += convertCardToValue(getCard());
-//        dealerTotal += convertCardToValue(getCard());
-        while(dealerTotal <= 17) {
-            dealerTotal += convertCardToValue(getCard());
+        for(Player p: players){
+            System.out.println(p.getName() + " would you like to hit or stay? (h/s)");
+            String ans = scanner.next();
+
+            while(ans.equals("h") && p.getTotalPoints() < 21){
+                Card card = deck.pop();
+                p.add(card);
+                System.out.println(p.getName() +": You got a " + card +".");
+                System.out.println(p.getName() + "You have a total of " + p.getTotalPoints() + " points.");
+
+                System.out.print(p.getName() + " ");
+                if(p.getTotalPoints() > 21) {
+                    System.out.println("You busted!");
+                    ans = "s";
+                } else if(p.getTotalPoints() == 21){
+                    System.out.println("You got a perfect score!");
+                    ans = "s";
+                }else{
+                    System.out.println("Would you like to hit or stay? (h/s)");
+                    ans = scanner.next();
+                }
+            }
         }
 
-        System.out.println("Dealer gets " + dealerTotal);
-
-        if (playerTotal > 21) {
-            System.out.println("Player loses");
-        } else if (dealerTotal > 21) {
-            System.out.println("Player wins");
-        } else if(playerTotal > dealerTotal) {
-            System.out.println("Player wins");
-        } else if(playerTotal == dealerTotal){
-            System.out.println("It's a draw");
-        } else {
-            System.out.println("Dealer wins");
+        while (dealer.getTotalPoints() < 17){
+            Card card = deck.pop();
+            dealer.add(card);
+            System.out.println(dealer.getName() +": You got a " + card +".");
+            System.out.println(dealer.getName() + "You have a total of " + dealer.getTotalPoints() + " points.");
         }
 
-
-
-
+        for(Player p: players){
+            System.out.print(p.getName() + ": ");
+            if(p.getTotalPoints() > 21 || p.getTotalPoints() < dealer.getTotalPoints()){
+                System.out.println("Better Luck next time. The dealer won with a total of "
+                        + dealer.getTotalPoints() + " points.");
+            } else if(p.getTotalPoints() > dealer.getTotalPoints()){
+                System.out.println("Congratulations! You beat the dealer with a total of "
+                        + p.getTotalPoints() + " points.");
+            } else {
+                System.out.println("You tied the dealer with a total of "
+                        + p.getTotalPoints() + " points.");
+            }
+        }
     }
-
-    /**
-     * Should return a number between 1 and 13 to
-     * represent a card
-     * @return number between 1 and 13
-     */
-    public static int getCard() {
-        Random random = new Random();
-        return random.nextInt(13) + 1;
-    }
-
 
 }
