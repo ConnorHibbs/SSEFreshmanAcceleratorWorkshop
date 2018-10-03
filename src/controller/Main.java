@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Stack;
 
+import model.Deck;
 import model.Hand;
 import model.Player;
 
@@ -19,6 +20,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         Stack<Card> deck = getDeck();
+
+//        Deck deck = new Deck();
 
         Card cardA = deck.pop();
         Card cardB = deck.pop();
@@ -112,11 +115,13 @@ public class Main {
 
     private static Stack<Card> getDeck() {
         Stack<Card> deck = new Stack();
-        for(int suit = 0; suit < 4; suit++){
-            for(int number = 2; number < 14; number++){
+        for(int suit = 1; suit <= 4; suit++){
+            for(int number = 1; number < 14; number++){
                 deck.push(new Card(number, suit));
             }
         }
+
+        Collections.shuffle(deck);
         return deck;
     }
 }
